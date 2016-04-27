@@ -19,10 +19,6 @@
 
 int is_transpose(int M, int N, int A[N][M], int B[M][N]);
 
-unsigned int get_z_value_row(unsigned int z_value);
-unsigned int get_z_value_col(unsigned int z_value);
-
-unsigned int INT_SIZE = sizeof(int) * 8;
 
 /*
  * transpose_submit - This is the solution transpose function that you
@@ -38,11 +34,12 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 
     unsigned int row = 0;
     unsigned int col = 0;
-    unsigned int int_size = sizeof(int) * 8;
     unsigned int shift = 0;
     unsigned int z_value = 0;
     for (z_value = 0; z_value < N*M; z_value++)
     {
+        row = 0;
+        col = 0;
         for (shift = 0; shift < sizeof(int)*8; shift += 2)
         {
             row |= ((z_value & (2<<shift)) >> ((shift/2)+1));
@@ -52,27 +49,6 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
     }
 }
 
-unsigned int get_z_value_row(unsigned int z_value)
-{
-    unsigned int row = 0;
-    unsigned int shift = 0;
-    for (shift = 0; shift < INT_SIZE; shift += 2)
-    {
-        row |= ((z_value & (2<<shift)) >> ((shift/2)+1));
-    }
-    return row;
-}
-
-unsigned int get_z_value_col(unsigned int z_value)
-{
-    unsigned int col = 0;
-    unsigned int shift = 0;
-    for (shift = 0; shift < INT_SIZE; shift += 2)
-    {
-        col |= ((z_value & (1<<shift)) >> (shift/2));
-    }
-    return col;
-}
 
 /*
  * You can define additional transpose functions below. We've defined
