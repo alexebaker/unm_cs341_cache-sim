@@ -19,6 +19,9 @@
 
 int is_transpose(int M, int N, int A[N][M], int B[M][N]);
 
+void transpose_z_curve(int M, int N, int A[N][M], int B[M][N]);
+void transpose_hilbert_curve(int M, int N, int A[N][M], int B [M][N]);
+
 
 /*
  * transpose_submit - This is the solution transpose function that you
@@ -30,13 +33,26 @@ int is_transpose(int M, int N, int A[N][M], int B[M][N]);
 char transpose_submit_desc[] = "Transpose submission";
 void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
+}
+
+
+/*
+ * You can define additional transpose functions below. We've defined
+ * a simple one below to help you get started.
+ */
+
+
+char transpose_z_curve_desc[] = "Transpose using Z-curve";
+void transpose_z_curve(int M, int N, int A[N][M], int B[M][N])
+{
     /* Use Z-order curve to traverse the matrix */
 
     unsigned int row = 0;
     unsigned int col = 0;
     unsigned int shift = 0;
     unsigned int z_value = 0;
-    for (z_value = 0; z_value < N*M; z_value++)
+    unsigned int max_dim = M > N ? M : N;
+    for (z_value = 0; z_value < max_dim*max_dim; z_value++)
     {
         row = 0;
         col = 0;
@@ -50,10 +66,16 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 }
 
 
-/*
- * You can define additional transpose functions below. We've defined
- * a simple one below to help you get started.
- */
+char transpose_hilbert_curve_desc[] = "Transpose using a hilbert curve";
+void transpose_hilbert_curve(int M, int N, int A[N][M], int B[M][N])
+{
+    /* Use a hilbert curve to traverse the matrix
+
+    unsigned int row = 0;
+    unsigned int col = 0;
+    unsigned int dist = 0; */
+}
+
 
 /*
  * trans - A simple baseline transpose function, not optimized for the cache.
@@ -84,6 +106,9 @@ void registerFunctions()
     registerTransFunction(transpose_submit, transpose_submit_desc);
 
     /* Register any additional transpose functions */
+    registerTransFunction(transpose_z_curve, transpose_submit_desc);
+    registerTransFunction(transpose_hilbert_curve, transpose_hilbert_curve_desc);
+
     registerTransFunction(trans, trans_desc);
 }
 
