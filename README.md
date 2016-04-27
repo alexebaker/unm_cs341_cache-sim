@@ -34,18 +34,18 @@ Check everything at once (this is the program that your instructor runs):
 
 ### You will modifying and handing in these two files
 
-csim.c       Your cache simulator
-trans.c      Your transpose function
+* csim.c       Your cache simulator
+* trans.c      Your transpose function
 
 ### Tools for evaluating your simulator and transpose function
 
-Makefile     Builds the simulator and tools
-README       This file
-driver.py*   The driver program, runs test-csim and test-trans
-cachelab.c   Required helper functions
-cachelab.h   Required header file
-csim-ref*    The executable reference cache simulator
-test-csim*   Tests your cache simulator
-test-trans.c Tests your transpose function
-tracegen.c   Helper program used by test-trans
-traces/      Trace files used by test-csim.c
+* Makefile     Builds the simulator and tools
+* README       This file
+* driver.py*   The driver program, runs test-csim and test-trans
+* cachelab.c   Required helper functions
+* cachelab.h   Required header file
+* csim-ref*    The executable reference cache simulator
+* test-csim*   Tests your cache simulator
+* test-trans.c Tests your transpose function
+* tracegen.c   Helper program used by test-trans
+* traces/      Trace files used by test-csim.c
