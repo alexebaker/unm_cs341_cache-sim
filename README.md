@@ -39,9 +39,9 @@ Check everything at once (this is the program that your instructor runs):
 
 ### Tools for evaluating your simulator and transpose function
 
-* Makefile     Builds the simulator and tools
-* README       This file
-* driver.py*   The driver program, runs test-csim and test-trans
+* Makefile   |  Builds the simulator and tools
+* README     |  This file
+* driver.py* |  The driver program, runs test-csim and test-trans
 * cachelab.c   Required helper functions
 * cachelab.h   Required header file
 * csim-ref*    The executable reference cache simulator
