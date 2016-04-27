@@ -43,6 +43,7 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
     {
         row = get_z_value_row(z_value);
         col = get_z_value_col(z_value);
+        printf("z_value=%x\nrow=%x\ncol=%x\n\n", z_value, row, col);
         B[col][row] = A[row][col];
     }
 }
@@ -53,7 +54,7 @@ unsigned int get_z_value_row(unsigned int z_value)
     unsigned int shift = 0;
     for (shift = 0; shift < INT_SIZE; shift += 2)
     {
-        row |= (z_value & (1<<shift));
+        row |= ((z_value & (2<<shift)) >> ((shift/2)+1));
     }
     return row;
 }
@@ -64,7 +65,7 @@ unsigned int get_z_value_col(unsigned int z_value)
     unsigned int shift = 0;
     for (shift = 0; shift < INT_SIZE; shift += 2)
     {
-        col |= (z_value & (2<<shift));
+        col |= ((z_value & (1<<shift)) >> (shift/2));
     }
     return col;
 }
