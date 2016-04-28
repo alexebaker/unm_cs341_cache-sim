@@ -51,8 +51,8 @@ void transpose_z_curve(int M, int N, int A[N][M], int B[M][N])
     unsigned int col = 0;
     unsigned int shift = 0;
     unsigned int z_value = 0;
-    unsigned int max_dim = M > N ? M : N;
-    for (z_value = 0; z_value < max_dim*max_dim; z_value++)
+    /*unsigned int max_dim = M > N ? M : N;*/
+    for (z_value = 0; z_value < M*N; z_value++)
     {
         row = 0;
         col = 0;
@@ -106,7 +106,7 @@ void registerFunctions()
     registerTransFunction(transpose_submit, transpose_submit_desc);
 
     /* Register any additional transpose functions */
-    registerTransFunction(transpose_z_curve, transpose_submit_desc);
+    registerTransFunction(transpose_z_curve, transpose_z_curve_desc);
     registerTransFunction(transpose_hilbert_curve, transpose_hilbert_curve_desc);
 
     registerTransFunction(trans, trans_desc);
