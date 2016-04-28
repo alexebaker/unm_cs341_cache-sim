@@ -34,14 +34,7 @@ void transpose_hilbert_curve(int M, int N, int A[N][M], int B [M][N]);
 char transpose_submit_desc[] = "Transpose submission";
 void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
-    if (M == N)
-    {
-        transpose_z_curve(M, N, A, B);
-    }
-    else
-    {
-        trans(M, N, A, B);
-    }
+    transpose_z_curve(M, N, A, B);
     return;
 }
 
@@ -60,17 +53,19 @@ void transpose_z_curve(int M, int N, int A[N][M], int B[M][N])
     unsigned int row = 0;
     unsigned int col = 0;
     unsigned int shift = 0;
+    unsigned int shift_limit = sizeof(int) * 8;
     unsigned int z_value = 0;
-    for (z_value = 0; z_value < M*N; z_value++)
+    unsigned int z_limit = M > N ? M*M : N*N;
+    for (z_value = 0; z_value < z_limit; z_value++)
     {
         row = 0;
         col = 0;
-        for (shift = 0; shift < sizeof(int)*8; shift += 2)
+        for (shift = 0; shift < shift_limit; shift += 2)
         {
             row |= ((z_value & (2<<shift)) >> ((shift/2)+1));
             col |= ((z_value & (1<<shift)) >> (shift/2));
         }
-        B[col][row] = A[row][col];
+        if ((row < N) && (col < M)) B[col][row] = A[row][col];
     }
     return;
 }
