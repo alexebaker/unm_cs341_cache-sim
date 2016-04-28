@@ -19,6 +19,7 @@
 
 int is_transpose(int M, int N, int A[N][M], int B[M][N]);
 
+void trans(int M, int N, int A[N][M], int B[M][N]);
 void transpose_z_curve(int M, int N, int A[N][M], int B[M][N]);
 void transpose_hilbert_curve(int M, int N, int A[N][M], int B [M][N]);
 
@@ -33,6 +34,15 @@ void transpose_hilbert_curve(int M, int N, int A[N][M], int B [M][N]);
 char transpose_submit_desc[] = "Transpose submission";
 void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
+    if (M == N)
+    {
+        transpose_z_curve(M, N, A, B);
+    }
+    else
+    {
+        trans(M, N, A, B);
+    }
+    return;
 }
 
 
@@ -51,7 +61,6 @@ void transpose_z_curve(int M, int N, int A[N][M], int B[M][N])
     unsigned int col = 0;
     unsigned int shift = 0;
     unsigned int z_value = 0;
-    /*unsigned int max_dim = M > N ? M : N;*/
     for (z_value = 0; z_value < M*N; z_value++)
     {
         row = 0;
@@ -63,17 +72,15 @@ void transpose_z_curve(int M, int N, int A[N][M], int B[M][N])
         }
         B[col][row] = A[row][col];
     }
+    return;
 }
 
 
 char transpose_hilbert_curve_desc[] = "Transpose using a hilbert curve";
 void transpose_hilbert_curve(int M, int N, int A[N][M], int B[M][N])
 {
-    /* Use a hilbert curve to traverse the matrix
-
-    unsigned int row = 0;
-    unsigned int col = 0;
-    unsigned int dist = 0; */
+    /* Use a hilbert curve to traverse the matrix */
+    return;
 }
 
 
@@ -106,9 +113,6 @@ void registerFunctions()
     registerTransFunction(transpose_submit, transpose_submit_desc);
 
     /* Register any additional transpose functions */
-    registerTransFunction(transpose_z_curve, transpose_z_curve_desc);
-    registerTransFunction(transpose_hilbert_curve, transpose_hilbert_curve_desc);
-
     registerTransFunction(trans, trans_desc);
 }
 
