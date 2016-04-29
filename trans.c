@@ -36,7 +36,7 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
 {
     if (M == N)
     {
-        transpose_z_curve(M, N, A, B);
+        transpose_hilbert_curve(M, N, A, B);
     }
     else
     {
@@ -82,6 +82,42 @@ char transpose_hilbert_curve_desc[] = "Transpose using a hilbert curve";
 void transpose_hilbert_curve(int M, int N, int A[N][M], int B[M][N])
 {
     /* Use a hilbert curve to traverse the matrix */
+    unsigned int row = 0;
+    unsigned int col = 0;
+    unsigned int drow = 0;
+    unsigned int dcol = 0;
+    unsigned int s = 0;
+    unsigned int d = 0;
+    unsigned int t = 0;
+    unsigned int temp = 0;
+    for (d = 0; d < M*N; d++)
+    {
+        row = 0;
+        col = 0;
+        t = d;
+        for (s = 0; s < N; s++)
+        {
+            dcol = 1 & (t/2);
+            drow = 1 & (t ^ dcol);
+            if (drow == 0)
+            {
+                if (dcol == 1)
+                {
+                    col = N-1 - col;
+                    row = N-1 - row;
+                }
+
+                temp = col;
+                col = row;
+                row = temp;
+            }
+
+            col += s * dcol;
+            row += s * drow;
+            t /= 4;
+        }
+        if ((row < N) && (col < M)) B[col][row] = A[row][col];
+    }
     return;
 }
 
