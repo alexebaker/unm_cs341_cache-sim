@@ -22,6 +22,7 @@ int is_transpose(int M, int N, int A[N][M], int B[M][N]);
 void trans(int M, int N, int A[N][M], int B[M][N]);
 void transpose_z_curve(int M, int N, int A[N][M], int B[M][N]);
 void transpose_hilbert_curve(int M, int N, int A[N][M], int B [M][N]);
+void transpose_by_block(int M, int N, int A[N][M], int B [M][N]);
 
 
 /*
@@ -95,7 +96,7 @@ void transpose_hilbert_curve(int M, int N, int A[N][M], int B[M][N])
         row = 0;
         col = 0;
         t = d;
-        for (s = 0; s < N; s++)
+        for (s = 1; s < N; s *= 2)
         {
             dcol = 1 & (t/2);
             drow = 1 & (t ^ dcol);
@@ -103,8 +104,8 @@ void transpose_hilbert_curve(int M, int N, int A[N][M], int B[M][N])
             {
                 if (dcol == 1)
                 {
-                    col = N-1 - col;
-                    row = N-1 - row;
+                    col = s-1 - col;
+                    row = s-1 - row;
                 }
 
                 temp = col;
@@ -117,6 +118,31 @@ void transpose_hilbert_curve(int M, int N, int A[N][M], int B[M][N])
             t /= 4;
         }
         if ((row < N) && (col < M)) B[col][row] = A[row][col];
+    }
+    return;
+}
+
+
+char transpose_by_block_desc[] = "Transpose by blocks";
+void transpose_by_block(int M, int N, int A[N][M], int B[M][N])
+{
+    int row = 0;
+    int col = 0;
+    int brow = 0;
+    int bcol = 0;
+    int blocksize = 4;
+    for (row = 0; row < N; row += blocksize)
+    {
+        for (col = 0; col < M; col += blocksize)
+        {
+            for (brow = row; (brow < (row + blocksize)) && (brow < N); brow++)
+            {
+                for (bcol = col; (bcol < (col + blocksize)) && (bcol < M); bcol++)
+                {
+                    B[bcol][brow] = A[brow][bcol];
+                }
+            }
+        }
     }
     return;
 }
@@ -155,6 +181,7 @@ void registerFunctions()
 
     registerTransFunction(transpose_z_curve, transpose_z_curve_desc);
     registerTransFunction(transpose_hilbert_curve, transpose_hilbert_curve_desc);
+    registerTransFunction(transpose_by_block, transpose_by_block_desc);
 }
 
 /*
