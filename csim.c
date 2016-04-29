@@ -13,6 +13,9 @@
 #include "cachelab.h"
 
 
+void read_trace(char** trace_file, int* verbose);
+
+
 int main(int argc, char **argv)
 {
     int help = 0;
@@ -20,8 +23,12 @@ int main(int argc, char **argv)
     int s_value = 0;
     int E_value = 0;
     int b_value = 0;
+    int hit_count = 0;
+    int miss_count = 0;
+    int evict_count = 0;
     char *trace_file = "";
     char *usage = "Usage: ./csim [-hv] -s <s> -E <E> -b <b> -t <tracefile>";
+
     int arg = 0;
     char* ptr = "";
 
@@ -50,7 +57,7 @@ int main(int argc, char **argv)
                 break;
             default:
                 printf("%s\n", usage);
-                exit(1);
+                exit(EXIT_FAILURE);
                 break;
         }
     }
@@ -58,11 +65,39 @@ int main(int argc, char **argv)
     if (help)
     {
         printf("%s\n", usage);
-        exit(0);
+        exit(EXIT_SUCCESS);
     }
 
-    printSummary(0, 0, 0);
-    return 0;
+    read_trace(&trace_file, &verbose);
+
+    printSummary(hit_count, miss_count, evict_count);
+    exit(EXIT_SUCCESS);
 }
 
 
+void read_trace(char** trace_file, int* verbose)
+{
+    FILE *fp = NULL;
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read = 0;
+
+    fp = fopen(*trace_file, "r");
+    if (fp == NULL)
+    {
+        printf("Unable to open file: %s\n", *trace_file);
+        exit(EXIT_FAILURE);
+    }
+
+    while ((read = getline(&line, &len, fp)) != -1)
+    {
+        if (*verbose)
+        {
+            printf("%s", line);
+        }
+    }
+
+    fclose(fp);
+    if (line) free(line);
+    return;
+}
