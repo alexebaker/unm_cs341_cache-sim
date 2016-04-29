@@ -30,3 +30,6 @@
 
 # Debug files
 *.dSYM/
+
+.csim_results
+csim
