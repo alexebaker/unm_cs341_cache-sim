@@ -152,6 +152,9 @@ void registerFunctions()
 
     /* Register any additional transpose functions */
     registerTransFunction(trans, trans_desc);
+
+    registerTransFunction(transpose_z_curve, transpose_z_curve_desc);
+    registerTransFunction(transpose_hilbert_curve, transpose_hilbert_curve_desc);
 }
 
 /*
