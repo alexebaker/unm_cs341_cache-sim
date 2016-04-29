@@ -41,7 +41,7 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
     }
     else
     {
-        trans(M, N, A, B);
+        transpose_by_block(M, N, A, B);
     }
     return;
 }
@@ -130,7 +130,7 @@ void transpose_by_block(int M, int N, int A[N][M], int B[M][N])
     int col = 0;
     int brow = 0;
     int bcol = 0;
-    int blocksize = 4;
+    int blocksize = 16;
     for (row = 0; row < N; row += blocksize)
     {
         for (col = 0; col < M; col += blocksize)
@@ -179,9 +179,9 @@ void registerFunctions()
     /* Register any additional transpose functions */
     registerTransFunction(trans, trans_desc);
 
-    registerTransFunction(transpose_z_curve, transpose_z_curve_desc);
-    registerTransFunction(transpose_hilbert_curve, transpose_hilbert_curve_desc);
-    registerTransFunction(transpose_by_block, transpose_by_block_desc);
+    //registerTransFunction(transpose_z_curve, transpose_z_curve_desc);
+    //registerTransFunction(transpose_hilbert_curve, transpose_hilbert_curve_desc);
+    //registerTransFunction(transpose_by_block, transpose_by_block_desc);
 }
 
 /*
