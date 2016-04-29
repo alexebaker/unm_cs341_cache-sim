@@ -32,4 +32,8 @@
 *.dSYM/
 
 .csim_results
+.marker
 csim
+tracegen
+test-trans
+test-csim
