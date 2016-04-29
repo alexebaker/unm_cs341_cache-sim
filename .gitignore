@@ -31,9 +31,13 @@
 # Debug files
 *.dSYM/
 
+*.swp
+*.tmp
+
 .csim_results
 .marker
 csim
 tracegen
 test-trans
 test-csim
+trace.*
