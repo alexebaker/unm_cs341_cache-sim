@@ -41,3 +41,4 @@ tracegen
 test-trans
 test-csim
 trace.*
+*.tar

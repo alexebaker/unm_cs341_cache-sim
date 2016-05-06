@@ -12,6 +12,13 @@
 
 #include "cachelab.h"
 
+#ifndef _BSD_SOURCE
+#define _BSD_SOURCE
+#endif
+
+
+int getopt(int argc, char *const *argv, const char *options);
+ssize_t getline(char **lineptr, size_t *n, FILE *stream);
 
 void read_trace(char** trace_file, int* verbose);
 
@@ -31,6 +38,7 @@ int main(int argc, char **argv)
 
     int arg = 0;
     char* ptr = "";
+    char* optarg = "";
 
     /* Parse cli args */
     while ((arg = getopt(argc, argv, "hvs:E:b:t:")) != -1)
@@ -67,6 +75,10 @@ int main(int argc, char **argv)
         printf("%s\n", usage);
         exit(EXIT_SUCCESS);
     }
+
+    s_value *= 1;
+    E_value *= 1;
+    b_value *= 1;
 
     read_trace(&trace_file, &verbose);
 

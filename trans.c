@@ -16,6 +16,10 @@
 #include <stdio.h>
 #include "cachelab.h"
 
+#ifndef _BSD_SOURCE
+#define _BSD_SOURCE
+#endif
+
 
 int is_transpose(int M, int N, int A[N][M], int B[M][N]);
 
